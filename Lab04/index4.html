@@ -9,7 +9,7 @@
  <script src="https://js.arcgis.com/4.14/"></script>
 
     <script>
-      require(["esri/Map", "esri/layers/TileLayer", "esri/layers/GeoJSONLayer", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/widgets/Legend"], function(Map,TileLayer, GeoJSONLayer, MapView, Legend, FeatureLayer) {
+      require(["esri/Map", "esri/layers/TileLayer", "esri/layers/GeoJSONLayer", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/widgets/Legend"], function(Map,TileLayer, GeoJSONLayer, MapView, FeatureLayer, Legend) {
 
         const url = "https://opendata.arcgis.com/datasets/e311ff702f1b491997a770607633ab07_0.geojson";
 
@@ -23,9 +23,9 @@
 	legendOptions: {title: "Assessed values in Lincoln"},
           symbol: {
             type: "simple-marker",
-            color: "yellow",
+            color: "red",
             outline: {
-              color: "black"
+              color: "gray"
             }
           },
            visualVariables: [
@@ -34,25 +34,21 @@
               field: "CNTASSDVAL",
               stops: [
                 {
-                  value: 25000,
-                   size: "5px",
-	     label: "Under 25,000"
+                  value: 100000,
+                   size: "7px",
+	     label: "low"
                 },
                 {
-                   value: 100000,
-                    size: "10px",
-	      label: "20,000 to 99,999"
+                   value: 500000,
+                    size: "17px",
+	      label: "medium"
                 },
 	 {
-	     value: 500000,
-                     size: "15px",
-	       label: "100,000 to 500,000"
-                },
-                {
-                    value: 2500000,
-                     size: "25px",
-	       label: "Astronomical"
+	     value: 1000000,
+                     size: "26px",
+	       label: "high"
                 }
+
               ]
             }
           ]
@@ -61,7 +57,7 @@
 
         const geojsonLayer = new GeoJSONLayer({
         url: url,
-        copyright: "GEOG 417/817",
+        copyright: "GEOG 417/817 | Tai Pleasant",
         renderer: renderer//renderer info would go here, and you add a comma to the field above
         });
 
@@ -74,7 +70,7 @@
         var view = new MapView({
           container: "viewDiv",
           map: map,
-          zoom: 11,
+          zoom: 7,
           center: [-96.68, 40.81] // longitude, latitude – change this as needed
         });
 
@@ -87,12 +83,12 @@ const legend = new Legend({
 view:view,
 layerInfos: [{
 layer: geojsonLayer,
-title: "Legend"
+title: "Lab 6 Symbols"
 }]
 });
 
 map.add(featureLayer);
-view.ui.add(legend, "bottom-right");
+view.ui.add(legend, "bottom-left");
 
 
   map.add(featureLayer);
