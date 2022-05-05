@@ -67,9 +67,10 @@ var geoPath = d3.geoPath()
         .attr( "fill", "#ccc" )
         .attr( "stroke", "#333")
         .attr( "d", geoPath );
+
         var lnk_json = svg.append( "g" );
-              lnk_json.selectAll( "path" )
-              .data( lnk_json.features )
+        lnk_json.selectAll( "path" )
+              .data( lnkbldngsjson.features )
               .enter()
               .append( "path" )
               .attr ( "fill", function(d) { return ramp(d.properties.RESYRBLT) })
@@ -85,11 +86,9 @@ var geoPath = d3.geoPath()
               .on("mouseout", function(d){
               d3.select("h2").text("");
               d3.select(this).attr("class","buildingdata");
-              });</script>
+              });
 
+            </script>
 
-
-</script>
    </body>
 </html>
-
