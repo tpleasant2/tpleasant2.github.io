@@ -1,4 +1,4 @@
-var omaJson = [
+var omaJson = {
 
 { "type": "Feature", "properties": { "name": "Masonic Opera House: What Cheer, IA", "latitude": 41.401397, "longitude": -92.354629, "time": "1\/1\/1904" }, "geometry": { "type": "Point", "coordinates": [ -92.354629, 41.401397 ] } },
 { "type": "Feature", "properties": { "name": "Masonic Opera House: What Cheer, IA", "latitude": 41.401397, "longitude": -92.354629, "time": "1\/2\/1904" }, "geometry": { "type": "Point", "coordinates": [ -92.354629, 41.401397 ] } },
