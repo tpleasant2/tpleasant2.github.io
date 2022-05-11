@@ -11,9 +11,9 @@
       <script src="https://dsps.lib.uiowa.edu/placing/public/fuse-1.2.1/fuse.min.js"></script>
       <script src="https://dsps.lib.uiowa.edu/placing/public/leafletFuseSearch-noVersion/leafletfuse.js"></script>
       <link rel="stylesheet" href="https://dsps.lib.uiowa.edu/placing/public/leafletFuseSearch-noVersion/leafletfuse.css" type="text/css"/>
-      <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-      <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-      <link rel="stylesheet" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css">
+      <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+      <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+      <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css">
       <script src="https://dsps.lib.uiowa.edu/placing/public/jqueryUiTouchPunch-0.2.2/jquery.ui.touch-punch.min.js"></script>
       <script src="https://tpleasant2.github.io/lab7/Brinton.js"></script>
 
@@ -21,93 +21,98 @@
 	  <link rel="stylesheet" type="text/css" href="https://dsps.lib.uiowa.edu/placing/css/navwrap.css">
   </head>
   <body>
-    <div id="map" style="width: 100%; height: 650px"></div>
-<script>
+      <div id="map" style="width: 1200px; height: 1200px"></div>
+  <script>
 
- var basemap =  L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}',
-  {
-                    attribution: 'Map tiles by <a href="https://stamen.com">Stamen  Design</a>, <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash;Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>contributors',
-                    subdomains: 'abcd',
-                    minZoom: 0,
-                    maxZoom: 20,
-                    ext: 'png'
-                });
+  	 var basemap =  L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
+                      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                      subdomains: 'abcd',
+                      minZoom: 0,
+                      maxZoom: 20,
+                      ext: 'png'
+                  });
 
-      var map = L.map('map', {
-  center: [41.2680254143215, -95.93705776991254],
-  zoom: 15,
-  layers: [basemap]
-  });
-      // onEachFeature generate a popup for each location
-      var onEachFeature = function(feature, layer) {
-        if (feature.properties) {
-          var prop = feature.properties;
-          // make a cool little html popup with properties
-            var popup = '<h3>'+prop['FNAME']+''+prop['LNAME']+'</h3>'+'<strong>Race/Gender: </strong>'+prop['RACE']+''+prop['GENDER']+'<br><strong>Occupation:</strong>'+prop['OCCUPATION']+'<br><strong>Age:</strong>'+prop['AGE']+'<br><strong>Family Estate: $</strong>'+prop['PERSREAL']+'<br><strong>Fam. Real Estate: $</strong>'+prop['FAMREAL']+'<br><strong>Address:</strong>'+prop['ADDRESS']+'<br><br><i>details from Census Bureau and city directories</i>';
-            // add known info about event to the description
+        var map = L.map('map', {
+  	  center: [39.0997, -94.5786],
+  	  zoom: 6,
+  	  layers: [basemap]
+  	  });
 
-          // you must create a layer property on each feature or else
-          // the search results won't know where the item is on the map / layer
-          feature.layer = layer;
-          layer.bindPopup(popup, {maxWidth: "auto"});
-        }
-      }; // end onEachFeature
+        // onEachFeature generate a popup for each location
+        var onEachFeature = function(feature, layer) {
+          if (feature.properties) {
+            var prop = feature.properties;
+            // make a cool little html popup with properties
+              var popup = '<h3>'+prop['name']+' '+prop['time'];
+              // add known info about event to the description
 
-      var blueCircleMarkers = {
-       radius: 4,
-       fillColor: "#00AEEF",
-       color: "#3978BF",
-       weight: 1,
-       opacity: 0.8,
-       fillOpacity: 0.5
-     };
-     var orangeCircleMarkers = {
-       radius: 5,
-       fillColor: "#ED1C24",
-       color: "#ED1C24",
-       weight: 1,
-       opacity: 1,
-       fillOpacity: 0.7
-     };
-     var greenCircleMarkers = {
-       radius: 5,
-       fillColor: "#ffff00",
-       color: "#286933",
-       weight: 1,
-       opacity: 1,
-       fillOpacity: 0.7
-     };
-     var firstlayer = L.geoJson(omaJson, {
-       // add popups
-       onEachFeature: onEachFeature,
-       pointToLayer: function(feature, latlng) {
-         return L.circleMarker(latlng, blueCircleMarkers);
-       }
-     }).addTo(map);
-     var timelineLayer = L.geoJson(omaJson, {
-       onEachFeature: onEachFeature,
-       pointToLayer: function(feature, latlng) {
-         return L.circleMarker(latlng, orangeCircleMarkers);
-       }
-     });
-     // now make a timeline layer that the slider can manipulate
-     var searchLayer = L.geoJson(omaJson, {
-       onEachFeature: onEachFeature,
-       pointToLayer: function(feature, latlng) {
-         return L.circleMarker(latlng, greenCircleMarkers);
-       }
-     });
-     var sliderControl = L.control.sliderControl({
+            // you must create a layer property on each feature or else
+            // the search results won't know where the item is on the map / layer
+            feature.layer = layer;
+            layer.bindPopup(popup, {maxWidth: "auto"});
+          }
+        }; // end onEachFeature
+        var blueCircleMarkers = {
+          radius: 4,
+          fillColor: "#00AEEF",
+          color: "#3978BF",
+          weight: 1,
+          opacity: 0.8,
+          fillOpacity: 0.5
+        };
+
+        var orangeCircleMarkers = {
+          radius: 5,
+          fillColor: "#ED1C24",
+          color: "#ED1C24",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.7
+        };
+
+        var greenCircleMarkers = {
+          radius: 5,
+          fillColor: "#ffff00",
+          color: "#286933",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.7
+        };
+        var firstlayer = L.geoJson(brighton, {
+          // add popups
+          onEachFeature: onEachFeature,
+          pointToLayer: function(feature, latlng) {
+            return L.circleMarker(latlng, blueCircleMarkers);
+          }
+        }).addTo(map);
+
+        var timelineLayer = L.geoJson(brighton, {
+          onEachFeature: onEachFeature,
+          pointToLayer: function(feature, latlng) {
+            return L.circleMarker(latlng, orangeCircleMarkers);
+          }
+        });
+
+        // now make a timeline layer that the slider can manipulate
+        var searchLayer = L.geoJson(brighton, {
+          onEachFeature: onEachFeature,
+          pointToLayer: function(feature, latlng) {
+            return L.circleMarker(latlng, greenCircleMarkers);
+          }
+        });
+        var sliderControl = L.control.sliderControl({
      position: "topright",
      layer: timelineLayer,
      range: true // gives it a bottom and a top slider
  });
+
  map.addControl(sliderControl);
  sliderControl.startSlider(); // initialize
+
  var searchOptions = {
    position: 'topleft',
    title: 'Search',
-   placeholder: 'Example: John Smith',
+   placeholder: 'Example: 11/25/1904',
    maxResultLength: 10,
    caseSensitive: false,
    showInvisibleFeatures: true,
@@ -116,17 +121,20 @@
    showResultFct: function(feature, container) {
      props = feature.properties;
      var name = L.DomUtil.create('b', null, container);
-     name.innerHTML = props.LNAME;
+     name.innerHTML = props.time;
      container.appendChild(L.DomUtil.create('br', null, container));
-     var cat = props.LNAME ? props.FNAME : props.OCCUPATION,
+
+     var cat = props.time ? props.time:
          info = cat;
      container.appendChild(document.createTextNode(info));
    }
  };
  var searchControl = L.control.fuseSearch(searchOptions);
  map.addControl(searchControl);
- searchControl.indexFeatures(omaJson, ['name']);
- displayFeatures(omaJson, searchLayer);
+ searchControl.indexFeatures(brighton, ['time']);
+
+ displayFeatures(brighton, searchLayer);
+
  function displayFeatures(features, layer) {
    var popup = L.DomUtil.create('div', 'tiny-popup', map.getContainer());
    for (var id in features) {
@@ -135,7 +143,7 @@
      var site = L.geoJson(feat, {
        pointToLayer: function(feature, latLng) {
          var marker = L.marker(latLng, {
-icon: orangeCircleMarkers,
+     icon: orangeCircleMarkers,
            keyboard: false,
            riseOnHover: true
          });
@@ -156,14 +164,14 @@ icon: orangeCircleMarkers,
    return layer;
  };
  var overlays = {
-"People of Color": firstlayer
-};
+ 			"People of Color": firstlayer
+ 	  };
 
-var baseMaps = {
-"Historic": basemap
-};
+ 			var baseMaps = {
+ 			"Historic": basemap
+ 			};
 
-L.control.layers(overlays, baseMaps, {collapsed:false}).addTo(map);
-  </script>
-</body>
-</html>
+ 	  L.control.layers(overlays, baseMaps, {collapsed:false}).addTo(map);
+     </script>
+   </body>
+ </html>
